@@ -1,0 +1,38 @@
+//when placed on top-front edge
+typedef struct {
+    enum color colors[2];
+}edge;
+
+//when placed on the top right corner
+typedef struct {
+    enum color colors[3];
+
+}corner;
+
+typedef struct{
+    corner cornerspieces[8];
+    edge edgepieces[12];
+}cube;
+
+canonical->cornerspieces[0] = (corner){{WHITE, RED, GREEN}};
+canonical->cornerspieces[1] = (corner){{WHITE, GREEN, ORANGE}};
+canonical->cornerspieces[2] = (corner){{WHITE, ORANGE, BLUE}};
+canonical->cornerspieces[3] = (corner){{WHITE, BLUE, RED}};
+canonical->cornerspieces[4] = (corner){{YELLOW, ORANGE, GREEN}};
+canonical->cornerspieces[5] = (corner){{YELLOW, GREEN, RED}};
+canonical->cornerspieces[6] = (corner){{YELLOW, RED, BLUE}};
+canonical->cornerspieces[7] = (corner){{YELLOW, BLUE, ORANGE}};
+
+canonical->edgepieces[0] = (edge){{WHITE, GREEN}};
+canonical->edgepieces[1] = (edge){{WHITE, ORANGE}};
+canonical->edgepieces[2] = (edge){{WHITE, BLUE}};
+canonical->edgepieces[3] = (edge){{WHITE, RED}};
+canonical->edgepieces[4] = (edge){{RED, GREEN}};
+canonical->edgepieces[5] = (edge){{GREEN, ORANGE}};
+canonical->edgepieces[6] = (edge){{ORANGE, BLUE}};
+canonical->edgepieces[7] = (edge){{BLUE, RED}};
+canonical->edgepieces[8] = (edge){{YELLOW, GREEN}};
+canonical->edgepieces[9] = (edge){{YELLOW, RED}};
+canonical->edgepieces[10] = (edge){{YELLOW, BLUE}};
+canonical->edgepieces[11] = (edge){{YELLOW, ORANGE}};
+
