@@ -1,44 +1,58 @@
 #include <stdlib.h>
 #include "cube.h"
-#include "visualizer.h"
+#include "new_visualiser.h"
 #include "moves.h"
 int main(){
     cube* canonical = (cube*)malloc(sizeof(cube));
     cube* mutable = (cube*)malloc(sizeof(cube));
+    //corners
+    canonical->pieces[0] = (cubelet){.colors = {CUBE_RED, CUBE_WHITE, CUBE_GREEN}, .cordinate = corner_position[0]}; 
+    canonical->pieces[1] = (cubelet){.colors = {CUBE_ORANGE, CUBE_WHITE ,CUBE_GREEN}, .cordinate = corner_position[1]};
+    canonical->pieces[2] = (cubelet){.colors = {CUBE_ORANGE, CUBE_WHITE, CUBE_BLUE}, .cordinate = corner_position[2]};
+    canonical->pieces[3] = (cubelet){.colors = {CUBE_RED, CUBE_WHITE, CUBE_BLUE}, .cordinate = corner_position[3]};
+    canonical->pieces[4] = (cubelet){.colors = {CUBE_ORANGE, CUBE_YELLOW, CUBE_GREEN}, .cordinate = corner_position[4]};
+    canonical->pieces[5] = (cubelet){.colors = {CUBE_RED, CUBE_YELLOW, CUBE_GREEN}, .cordinate = corner_position[5]};
+    canonical->pieces[6] = (cubelet){.colors = {CUBE_RED, CUBE_YELLOW, CUBE_BLUE}, .cordinate = corner_position[6]};
+    canonical->pieces[7] = (cubelet){.colors = {CUBE_ORANGE, CUBE_YELLOW, CUBE_BLUE}, .cordinate = corner_position[7]};
 
-    canonical->cornerspieces[0] = (corner){{CUBE_WHITE, CUBE_RED, CUBE_GREEN}};
-    canonical->cornerspieces[1] = (corner){{CUBE_WHITE, CUBE_GREEN, CUBE_ORANGE}};
-    canonical->cornerspieces[2] = (corner){{CUBE_WHITE, CUBE_ORANGE, CUBE_BLUE}};
-    canonical->cornerspieces[3] = (corner){{CUBE_WHITE, CUBE_BLUE, CUBE_RED}};
-    canonical->cornerspieces[4] = (corner){{CUBE_YELLOW, CUBE_ORANGE, CUBE_GREEN}};
-    canonical->cornerspieces[5] = (corner){{CUBE_YELLOW, CUBE_GREEN, CUBE_RED}};
-    canonical->cornerspieces[6] = (corner){{CUBE_YELLOW, CUBE_RED, CUBE_BLUE}};
-    canonical->cornerspieces[7] = (corner){{CUBE_YELLOW, CUBE_BLUE, CUBE_ORANGE}};
+    //edges
+    canonical->pieces[8] = (cubelet){.colors = {CUBE_NULL, CUBE_WHITE, CUBE_GREEN}, .cordinate = edge_position[0]};
+    canonical->pieces[9] = (cubelet){.colors = {CUBE_ORANGE, CUBE_WHITE, CUBE_NULL}, .cordinate = edge_position[1]};
+    canonical->pieces[10] = (cubelet){.colors ={CUBE_NULL, CUBE_WHITE, CUBE_BLUE, }, .cordinate = edge_position[2]};
+    canonical->pieces[11] = (cubelet){.colors ={CUBE_RED, CUBE_WHITE,  CUBE_NULL}, .cordinate = edge_position[3]};
+    canonical->pieces[12] = (cubelet){.colors ={CUBE_RED, CUBE_NULL, CUBE_GREEN}, .cordinate = edge_position[4]};
+    canonical->pieces[13] = (cubelet){.colors ={CUBE_ORANGE, CUBE_NULL, CUBE_GREEN}, .cordinate = edge_position[5]};
+    canonical->pieces[14] = (cubelet){.colors ={CUBE_ORANGE, CUBE_NULL, CUBE_BLUE}, .cordinate = edge_position[6]};
+    canonical->pieces[15] = (cubelet){.colors ={CUBE_RED, CUBE_NULL, CUBE_BLUE}, .cordinate = edge_position[7]};
+    canonical->pieces[16] = (cubelet){.colors ={CUBE_NULL, CUBE_YELLOW, CUBE_GREEN}, .cordinate = edge_position[8]};
+    canonical->pieces[17] = (cubelet){.colors ={CUBE_RED, CUBE_YELLOW,  CUBE_NULL}, .cordinate = edge_position[9]};
+    canonical->pieces[18] = (cubelet){.colors ={CUBE_NULL ,CUBE_YELLOW, CUBE_BLUE}, .cordinate = edge_position[10]};
+    canonical->pieces[19] = (cubelet){.colors ={CUBE_ORANGE, CUBE_YELLOW, CUBE_NULL}, .cordinate = edge_position[11]};
 
-    canonical->edgepieces[0] = (edge){{CUBE_WHITE, CUBE_GREEN}};
-    canonical->edgepieces[1] = (edge){{CUBE_WHITE, CUBE_ORANGE}};
-    canonical->edgepieces[2] = (edge){{CUBE_WHITE, CUBE_BLUE}};
-    canonical->edgepieces[3] = (edge){{CUBE_WHITE, CUBE_RED}};
-    canonical->edgepieces[4] = (edge){{CUBE_RED, CUBE_GREEN}};
-    canonical->edgepieces[5] = (edge){{CUBE_GREEN, CUBE_ORANGE}};
-    canonical->edgepieces[6] = (edge){{CUBE_ORANGE, CUBE_BLUE}};
-    canonical->edgepieces[7] = (edge){{CUBE_BLUE, CUBE_RED}};
-    canonical->edgepieces[8] = (edge){{CUBE_YELLOW, CUBE_GREEN}};
-    canonical->edgepieces[9] = (edge){{CUBE_YELLOW, CUBE_RED}};
-    canonical->edgepieces[10] = (edge){{CUBE_YELLOW, CUBE_BLUE}};
-    canonical->edgepieces[11] = (edge){{CUBE_YELLOW, CUBE_ORANGE}};
+    //centres
+
+    canonical->pieces[20] = (cubelet){.colors = {CUBE_NULL, CUBE_WHITE, CUBE_NULL}, .cordinate = centre_position[0]};
+    canonical->pieces[21] = (cubelet){.colors = {CUBE_NULL, CUBE_NULL,CUBE_GREEN}, .cordinate = centre_position[1]};
+    canonical->pieces[22] = (cubelet){.colors = {CUBE_ORANGE, CUBE_NULL, CUBE_NULL}, .cordinate = centre_position[2]};
+    canonical->pieces[23] = (cubelet){.colors = {CUBE_NULL, CUBE_NULL, CUBE_BLUE}, .cordinate = centre_position[3]};
+    canonical->pieces[24] = (cubelet){.colors = {CUBE_RED, CUBE_NULL, CUBE_NULL}, .cordinate = centre_position[4]};
+    canonical->pieces[25] = (cubelet){.colors = {CUBE_NULL, CUBE_YELLOW, CUBE_NULL}, .cordinate = centre_position[5]};   
 
     init_mutable(mutable,canonical);
-    slot_cube* slot_cube = malloc(sizeof *slot_cube);
-    init_cube(slot_cube, mutable);
+    visualise_cube(mutable);
 
-    move_F(slot_cube);
-    draw_cube(slot_cube);
+    
 
-    move_Fdash(slot_cube);
-    draw_cube(slot_cube);
+    move_U(mutable);
+    visualise_cube(mutable);
 
-    move_2F(slot_cube);
-    draw_cube(slot_cube);
-    return 1;
+    move_U(mutable);
+    visualise_cube(mutable);
+
+    move_U(mutable);
+    visualise_cube(mutable);
+
+    move_U(mutable);
+    visualise_cube(mutable);
+    return 0;
 }
